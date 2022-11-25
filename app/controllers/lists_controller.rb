@@ -5,12 +5,22 @@ class ListsController < ApplicationController
   end
 
   def show
-    @lists = List.find(params[:id])
+    @list = List.find(params[:id])
   end
 
   def new
-    @lists = List.new
+    @list = List.new
   end
 
-  
+  def create
+    @list = List.create(list_params)
+    @list.save
+    redirect_to lists_path
+  end
+
+  private
+
+  def list_params
+    params.require(:list).permit(:name)
+  end
 end
